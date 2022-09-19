@@ -5,10 +5,6 @@ import { EntriesContext } from "../context";
 import { Container, NewEntry } from "../components/entries";
 
 const Home: React.FC = () => {
-  const { entries } = useContext(EntriesContext);
-
-  // console.log(process.env.NEXT_PUBLIC_CLIENT_KEY)
-
   return (
     <Layout title='Open Jira'>
       <Grid container spacing={2}>
@@ -25,7 +21,7 @@ const Home: React.FC = () => {
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title='In progress' />
-            <Container status="in-progress" />
+            <Container status="in_progress" />
           </Card>
         </Grid>
 
@@ -40,9 +36,4 @@ const Home: React.FC = () => {
   )
 }
 
-
-
-
-
 export default Home;
-

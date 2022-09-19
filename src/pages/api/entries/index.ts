@@ -1,11 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { db } from '../../../mongoose';
-import { Entry, type IEntry } from '../../../models';
+import { prisma, Entry } from '../../../db/client'
 
 type Data = 
   | { message: string; }
-  | IEntry[]
-  | IEntry
+  | Entry[]
+  | Entry
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   switch(req.method) {
@@ -19,28 +18,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 }
 
 const getEntries = async (res: NextApiResponse<Data>) => {
-  await db.connect();
-  const entries = await Entry.find().sort({ createdAt: 'ascending' });
-  await db.disconnect();
-
+  const entries = await prisma.entry.findMany({ orderBy: { createdAt: "asc" } });
   return res.status(200).json(entries);
 }
 
 const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { info = '' } = req.body;
-  const newEntry = new Entry({ info });
   
   try {
-    await db.connect();
-    newEntry.save();
-    await db.disconnect();
-
+    const newEntry = await prisma.entry.create({ data: { info }})
     res.status(201).json(newEntry);
   } catch (err) {
-    await db.disconnect();
     console.log(err);
     return res.status(500).json({ message: 'Something went wrong on the server :(' })
   }
-
-  res.status(201).json({ message: 'POST done...'})
 }
