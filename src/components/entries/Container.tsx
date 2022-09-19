@@ -18,9 +18,9 @@ export const Container: React.FC<{ status: EntryStatus }> = ({ status }) => {
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     const id = e.dataTransfer.getData("text");
-    const entry = entries.find(({ _id }) => _id === id)!;
+    const entry = entries.find(({ id:entryId }) => entryId === id)!
+    // console.log(entry);
     updateEntry({ ...entry, status });
-    console.log(entries)
     setIsDragging(false);
   }
 
@@ -33,7 +33,7 @@ export const Container: React.FC<{ status: EntryStatus }> = ({ status }) => {
       className={isDragging ? styles.dragging : ''}
     >
       <List sx={{ opacity: isDragging ? 0.2 : 1, transition: 'all .3s' }}>
-        {entriesMemo.map((props, index) => (<EntryCard key={props._id} index={index} {...props} />))}
+        {entriesMemo.map((props, index) => (<EntryCard key={index} index={index} {...props} />))}
       </List>
     </Paper>
   )

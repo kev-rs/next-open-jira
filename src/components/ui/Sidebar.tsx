@@ -11,7 +11,7 @@ export const Sidebar = () => {
   const { status, setStatus } = useContext(UIContext);
 
   return (
-    <Drawer anchor='left' open={status}  onClose={() => setStatus(false)}>
+    <Drawer anchor='left' open={status} onClose={() => setStatus(false)}>
       <Box sx={{width: 250}}>
         <Box sx={{padding: '5px 10px'}}>
           <Typography variant='h4'>Menu</Typography>

@@ -24,7 +24,7 @@ export const entriesReducer = (state: ENTRIES_INIT_STATE, action: PayloadActions
     case 'update':
       return {
         ...state,
-        entries: state.entries.map((entry) => (entry._id === action.payload._id) ? action.payload : entry)
+        entries: state.entries.map((entry) => (entry.id === action.payload.id) ? action.payload : entry)
       };
     case 'updateAll':
       return { ...state, entries: action.payload };
