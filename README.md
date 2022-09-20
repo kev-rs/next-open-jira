@@ -7,7 +7,9 @@ docker-compose up -d
 
 * MongoDB URL Local:
 ```
-mongodb://localhost:27017/entriesdb
+mongodb://mongo1:30001/entriesdb
+mongodb://mongo2:30002/entriesdb
+mongodb://mongo3:30003/entriesdb
 ```
 
 ## Config the enviroment variables
@@ -17,5 +19,5 @@ Rename file __.env.template__ to __.env__
 
 Call:
 ```
-http://localhost:3000/seed
+npx prisma db seed
 ```
