@@ -29,8 +29,12 @@ export const EntriesProvider: React.FC<ENTRIES_> = ({ children }) => {
   const updateEntries = (entries: Entry[]) => dispatch({type: 'updateAll', payload: entries})
 
   const refreshEntries = async () => {
-    const { data } = await entriesApi.get<Entry[]>('/entries');
-    dispatch({type: 'refresh', payload: data})
+    try {
+      const { data } = await entriesApi.get<Entry[]>('/entries');
+      dispatch({type: 'refresh', payload: data})  
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {

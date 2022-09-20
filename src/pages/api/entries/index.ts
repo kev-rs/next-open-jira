@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { prisma, Entry } from '../../../db/client'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { prisma, Entry } from '../../../backend/utils/prisma';
 
 type Data = 
   | { message: string; }
@@ -13,7 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     case 'POST':
       return postEntry(req, res);
     default:
-      return res.status(400).json({ message: `Endpoint - ${req.method}, does not exist` });
+      return res.status(400).json({ message: `Endpoint - ${req.method}, doesn\'t exist` });
   }
 }
 
@@ -30,6 +30,6 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     res.status(201).json(newEntry);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: 'Something went wrong on the server :(' })
+    return res.status(400).json({ message: 'Something went wrong on the creation process :(' })
   }
 }

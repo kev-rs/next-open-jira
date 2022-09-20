@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma, Entry } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -24,10 +24,6 @@ async function seed() {
         }
       ]
     })
-
-    const entries = await prisma.entry.findMany();
-
-    console.log(entries);
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -38,21 +34,3 @@ async function seed() {
 }
 
 seed();
-
-// const entriesData = [
-//   {
-//     info: 'This is an info about the entry provided by kev w/ Prisma',
-//     status: 'pending',
-//     createdAt: `${Date.now()}`
-//   },
-//   {
-//     info: 'This is an info about the entry provided by kev2 w/ Prisma',
-//     status: 'in_progress',
-//     createdAt: `${Date.now() - 100000}`,
-//   },
-//   {
-//     info: 'This is an info about the entry provided by kev3 w/ Prisma',
-//     status: 'completed',
-//     createdAt: `${Date.now() - 100000}` ,
-//   }
-// ]

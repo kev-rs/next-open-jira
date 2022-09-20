@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { Card, CardHeader, Grid } from "@mui/material";
 import { Layout } from "../components/layouts";
-import { EntriesContext } from "../context";
 import { Container, NewEntry } from "../components/entries";
 
 const Home: React.FC = () => {

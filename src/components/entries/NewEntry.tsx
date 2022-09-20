@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import z from 'zod';
 import { Box, Button, TextField } from "@mui/material"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
@@ -27,7 +27,6 @@ export const NewEntry = () => {
     <Box sx={{ marginBottom: 2, paddingX: 2 }} component='form' onSubmit={handleSubmit((e) => {
       setEntryType('close')
       addEntry(e.entry)
-      console.log(e);
     })}>
       {entryType === 'add'
         ? (

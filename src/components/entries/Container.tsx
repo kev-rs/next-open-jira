@@ -19,7 +19,6 @@ export const Container: React.FC<{ status: EntryStatus }> = ({ status }) => {
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     const id = e.dataTransfer.getData("text");
     const entry = entries.find(({ id:entryId }) => entryId === id)!
-    // console.log(entry);
     updateEntry({ ...entry, status });
     setIsDragging(false);
   }
