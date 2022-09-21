@@ -1,4 +1,5 @@
 # Next.js OpenJira App
+## Install node modules
 To run locally, it needs the database
 ```
 docker-compose up -d
@@ -17,7 +18,7 @@ Rename file __.env.template__ to __.env__
 
 ## Populate the db with test info
 
-Call:
+Run:
 ```
 npx prisma db seed
 ```

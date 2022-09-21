@@ -6,15 +6,19 @@ import AddIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EntriesContext, UIContext } from '../../context';
+import { useSnackbar } from 'notistack';
 
 const schema = z.object({
   entry: z.string().min(1, { message: 'Required' })
 });
 
 export const NewEntry = () => {
+
+  const { enqueueSnackbar } = useSnackbar();
+  
   const { addEntry } = useContext(EntriesContext);
   const { entryType, setEntryType } = useContext(UIContext);
-  const { register, handleSubmit, formState: { errors }, unregister, watch } = useForm({
+  const { register, handleSubmit, formState: { errors }, unregister } = useForm({
     resolver: zodResolver(schema),
     defaultValues: { entry: '' }
   });
@@ -27,6 +31,7 @@ export const NewEntry = () => {
     <Box sx={{ marginBottom: 2, paddingX: 2 }} component='form' onSubmit={handleSubmit((e) => {
       setEntryType('close')
       addEntry(e.entry)
+      enqueueSnackbar('Entry created', { variant: 'success' })
     })}>
       {entryType === 'add'
         ? (

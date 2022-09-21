@@ -1,8 +1,8 @@
 import { useReducer, useEffect } from 'react';
-import { Entry } from '../../interfaces';
 import { entriesReducer, Entries_INIT_STATE } from './entriesReducer';
 import { EntryProvider } from './store';
 import { entriesApi } from '../../services';
+import { Entry } from '../../backend/utils/prisma'
 
 interface ENTRIES_ {
   children: JSX.Element | JSX.Element[];
@@ -28,6 +28,11 @@ export const EntriesProvider: React.FC<ENTRIES_> = ({ children }) => {
 
   const updateEntries = (entries: Entry[]) => dispatch({type: 'updateAll', payload: entries})
 
+  const deleteEntry = async (entry: Entry) => {
+    const { data } = await entriesApi.delete<Entry>(`/entries/${entry.id}`);
+    dispatch({type: 'delete', payload: data});
+  }
+
   const refreshEntries = async () => {
     try {
       const { data } = await entriesApi.get<Entry[]>('/entries');
@@ -42,7 +47,7 @@ export const EntriesProvider: React.FC<ENTRIES_> = ({ children }) => {
   }, []);
   
  return (
-   <EntryProvider value={{...state, addEntry, updateEntry, updateEntries}}>
+   <EntryProvider value={{...state, addEntry, updateEntry, updateEntries, deleteEntry}}>
      { children }
    </EntryProvider>
  )

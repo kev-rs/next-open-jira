@@ -1,7 +1,8 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material"
+import { AppBar, IconButton, Toolbar, Typography, Link } from "@mui/material"
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { useContext } from "react";
 import { UIContext } from "../../context";
+import NextLink from 'next/link'
 
 export const Nav: React.FC = () => {
 
@@ -13,7 +14,11 @@ export const Nav: React.FC = () => {
         <IconButton size='large' edge='start' onClick={() => setStatus(true)}>
           <MenuOutlinedIcon />
         </IconButton>
-        <Typography variant='h6'>Open Jira</Typography>
+        <NextLink href='/' passHref>
+          <Link underline='none' color='snow'>
+            <Typography variant='h6'>Open Jira</Typography>
+          </Link>
+        </NextLink>
       </Toolbar>
     </AppBar>
   )

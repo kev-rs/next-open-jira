@@ -1,17 +1,14 @@
 import { createTheme } from '@mui/material';
-import { red } from '@mui/material/colors';
+import { pink, red } from '@mui/material/colors';
 
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    // primary: {
-    //   main: '#fff'
-    // },
     secondary: {
       main: '#19857b'
     },
     error: {
-      main: red.A400
+      main: pink[700]
     }
   },
   components: {
