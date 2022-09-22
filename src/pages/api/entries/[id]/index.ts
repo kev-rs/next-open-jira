@@ -25,8 +25,8 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const { info = entryToUpdate.info, status = entryToUpdate.status } = req.body;
     const entryUpdated = await prisma.entry.update({ where: { id: query.id }, data: { info, status } })
     res.status(200).json(entryUpdated);
-  } catch (error) {
-    return res.status(400).json({ message: `Failed to update entry :( \n${error}` });
+  } catch (err) {
+    return res.status(400).json({ message: `Failed to update entry :( \n${err}` });
   }
 }
 
