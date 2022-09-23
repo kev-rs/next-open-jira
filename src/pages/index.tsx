@@ -3,7 +3,7 @@ import { Card, CardHeader, Grid } from '@mui/material';
 import { GetStaticProps } from 'next';
 import { Layout } from '../components/layouts';
 import { prisma, Entry } from '../server/db/prisma';
-import { Container } from '../components/entries'
+import { Container, NewEntry } from '../components/entries'
 
 const Home: React.FC<{ entries: Entry[] }> = ({ entries }) => {
 
@@ -19,7 +19,7 @@ const Home: React.FC<{ entries: Entry[] }> = ({ entries }) => {
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title='Pending' />
-            {/* <NewEntry /> */}
+            <NewEntry />
             <Container status="pending" />
           </Card>
         </Grid>
