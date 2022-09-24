@@ -7,11 +7,6 @@ import { Container, NewEntry } from '../components/entries'
 
 const Home: React.FC<{ entries: Entry[] }> = ({ entries }) => {
 
-
-  // useEffect(() => {
-  //   console.log(entries);
-  // }, [entries])
-
   return (
     <Layout title='Home'>
       <Grid container spacing={2}>
@@ -44,12 +39,3 @@ const Home: React.FC<{ entries: Entry[] }> = ({ entries }) => {
 }
 
 export default Home;
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-
-  const getEntries = await prisma.entry.findMany({ orderBy: { createdAt: 'asc' } });
-
-  return {
-    props: { entries: getEntries.map(({ createdAt, ...rest }) => ({ rest, createdAt: `${createdAt}` })) },
-  }
-}
