@@ -1,5 +1,5 @@
 import { DragEvent, useContext } from 'react';
-import { Entry } from "../../interfaces";
+import { Entry } from '../../backend/utils/prisma';
 import { Card, CardActionArea, CardActions, CardContent, Typography } from "@mui/material";
 import { UIContext } from '../../context';
 import { useRouter } from 'next/router';

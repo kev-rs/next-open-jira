@@ -1,5 +1,5 @@
 import { DragEvent, useContext, useMemo } from 'react';
-import { Box, List, Paper } from "@mui/material"
+import { List, Paper } from "@mui/material"
 import { EntryCard } from "./"
 import { EntryStatus } from '../../interfaces/entries';
 import { EntriesContext } from '../../context/entries/store';
@@ -13,6 +13,7 @@ export const Container: React.FC<{ status: EntryStatus }> = ({ status }) => {
 
   const entriesByStatus = entries.filter((entry) => entry.status === status);
   const entriesMemo = useMemo(() => entriesByStatus, [entriesByStatus]);
+  console.log(entriesMemo)
 
   const allowDrop = (e: DragEvent<HTMLDivElement>) => e.preventDefault();
 
