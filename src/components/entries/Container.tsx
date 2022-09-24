@@ -1,4 +1,4 @@
-import { DragEvent, useContext, useMemo, useState } from 'react';
+import { DragEvent, useContext, useMemo } from 'react';
 import { Paper, List } from '@mui/material';
 import { EntryCard } from './EntryCard';
 import { EntriesContext, UIContext } from '../../context';
@@ -11,16 +11,14 @@ export const Container: React.FC<{ status: Status }> = ({ status }) => {
   const { isDragging, setIsDragging } = useContext(UIContext)
 
   const entriesByStatus = entries.filter((entry) => entry.status === status);
-  const entriesMemo = useMemo(() => entriesByStatus, [ entriesByStatus ]);
+  const entriesMemo = useMemo(() => entriesByStatus, [entriesByStatus]);
 
-  const allowDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  }
+  const allowDrop = (e: DragEvent<HTMLDivElement>) => e.preventDefault();
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     const id = e.dataTransfer.getData("text");
     const entry = entries.find((item) => item.id === id)!;
-    updateEntry({...entry, status});
+    updateEntry({ ...entry, status });
     // setIsDragging(false);
   }
 
@@ -32,7 +30,7 @@ export const Container: React.FC<{ status: Status }> = ({ status }) => {
       onDragOver={allowDrop}
       className={isDragging ? styles.dragging : ''}
     >
-      <List 
+      <List
         sx={{ opacity: isDragging ? 0.2 : 1, transition: 'all .3s' }}
       >
         {entriesMemo.map((props, index) => (<EntryCard key={index} index={index} {...props} />))}

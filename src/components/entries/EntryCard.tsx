@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardContent, Typography, CardActions } from '@mui
 import { Entry } from '../../server/db/prisma';
 import moment from 'moment'
 import { UIContext } from '../../context';
+import { useRouter } from 'next/router';
 
 interface Props extends Entry {
   index: number;
@@ -11,6 +12,7 @@ interface Props extends Entry {
 export const EntryCard: React.FC<Props> = ({ status, id, createdAt, info }) => {
 
   const { setIsDragging } = useContext(UIContext)
+  const router = useRouter();
 
   const onDragStart = (e: DragEvent<HTMLInputElement>) => {
     e.dataTransfer.setData("text", id);
@@ -29,6 +31,7 @@ export const EntryCard: React.FC<Props> = ({ status, id, createdAt, info }) => {
       draggable
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      onClick={() => router.push(`/entry/${id}`)}
     >
       <CardActionArea>
         <CardContent>

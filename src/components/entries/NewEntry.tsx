@@ -1,9 +1,10 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, useMemo, useContext } from 'react';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod'
+import { EntriesContext } from '../../context/entries/store';
 
 const schema = z.object({
   entry: z.string().min(1, 'Required')
@@ -11,15 +12,20 @@ const schema = z.object({
 
 export const NewEntry = () => {
 
+  const { newEntry } = useContext(EntriesContext);
   const [ isOpen, setIsOpen ] = useState(false);
-  const { register, unregister, formState: { errors, touchedFields }, handleSubmit } = useForm({
+  const { register, unregister, formState: { errors, touchedFields }, handleSubmit, watch } = useForm({
     defaultValues: { entry: '' },
     resolver: zodResolver(schema)
   });
 
+  const entry = watch('entry') || '';
+
   useEffect(() => {
     if( !isOpen ) return unregister('entry');
   }, [ unregister, isOpen ]);
+
+  const check = useMemo(() => touchedFields.entry && entry.length < 1 || !!errors.entry, [ entry.length, errors.entry, touchedFields.entry ])
 
   if(!isOpen) return (
     <>
@@ -32,7 +38,7 @@ export const NewEntry = () => {
   )
   return (
     <Box component={'form'} sx={{padding: 2}} onSubmit={handleSubmit((e) => {
-      console.log(e);
+      newEntry(e.entry)
       setIsOpen(false);
     })}>
       <Box component='div'>
@@ -41,7 +47,8 @@ export const NewEntry = () => {
           fullWidth
           autoFocus
           placeholder='Type new entry'
-          helperText='Type new entry'
+          error={check}
+          helperText={check ? 'Required' : 'Type new entry'}
           label='New entry'
           variant='outlined'
           {...register('entry')}

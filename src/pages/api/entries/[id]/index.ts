@@ -10,7 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     case 'GET':
       return getEntry(req, res);
     case 'PUT':
-      return updateEntry(req, res)
+      return updateEntry(req, res);
+    case 'DELETE':
+      return deleteEntry(req, res);
     default:
       return res.status(400).json({ message: `method <- ${req.method} -> not available` })
   }
@@ -40,6 +42,17 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(200).json(entryUpdated);
   } catch (error) {
     res.status(500);
+  }
+}
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const { id } = req.query as { id: string };
+
+  try {
+    const entryToDelete = await prisma.entry.delete({ where: { id }});
+    return res.status(200).json(entryToDelete);
+  } catch (err) {
+    return res.status(400);
   }
 }
 

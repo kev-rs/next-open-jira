@@ -11,10 +11,10 @@ datasource db {
 }
 
 model Entry {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  info String
-  status  Status @default(pending)
-  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  info      String
+  status    Status?  @default(pending)
+  createdAt DateTime? @default(now())
 }
 
 enum Status {

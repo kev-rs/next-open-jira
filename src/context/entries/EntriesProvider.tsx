@@ -26,12 +26,22 @@ export const EntriesProvider: React.FC<{ children: JSX.Element }> = ({ children 
     dispatch({ type: 'update', payload: data });
   }
 
+  const newEntry = async (info: string) => {
+    const { data } = await entryApi.post<Entry>(`/entries`, { info });
+    dispatch({ type: 'new', payload: data });
+  }
+
+  const deleteEntry = async (entry: Entry) => {
+    const { data } = await entryApi.delete<Entry>(`/entries/${entry.id}`);
+    dispatch({ type: 'remove', payload: data });
+  }
+
   useEffect(() => {
     refresh();
   }, []);
 
   return (
-    <Provider value={{...state, updateEntry}}>
+    <Provider value={{...state, updateEntry, newEntry, deleteEntry}}>
       { children }
     </Provider>
   )
