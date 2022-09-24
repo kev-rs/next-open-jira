@@ -13,7 +13,6 @@ export const Container: React.FC<{ status: EntryStatus }> = ({ status }) => {
 
   const entriesByStatus = entries.filter((entry) => entry.status === status);
   const entriesMemo = useMemo(() => entriesByStatus, [entriesByStatus]);
-  console.log(entriesMemo)
 
   const allowDrop = (e: DragEvent<HTMLDivElement>) => e.preventDefault();
 

@@ -136,7 +136,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const checkMongoIDRegExp = new RegExp('^[0-9a-fA-F]{24}$');
   if(!checkMongoIDRegExp.test(id)) return { redirect: { destination: '/', permanent: false } } 
 
-  const entry: Entry | null = await prisma.entry.findUnique({ where: { id } });
+  const entry = await prisma.entry.findUnique({ where: { id } });
 
   return {
     props: { entry: { ...entry, createdAt: `${entry?.createdAt}`} },
