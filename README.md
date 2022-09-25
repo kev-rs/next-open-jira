@@ -1,5 +1,8 @@
 # Next.js OpenJira App
 ## Install node modules
+```
+npm install
+```
 To run locally, it needs the database
 ```
 docker-compose up -d

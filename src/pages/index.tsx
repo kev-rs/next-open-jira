@@ -3,6 +3,7 @@ import { Layout } from "../components/layouts";
 import { Container, NewEntry } from "../components/entries";
 
 const Home: React.FC = () => {
+
   return (
     <Layout title='Open Jira'>
       <Grid container spacing={2}>

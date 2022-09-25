@@ -16,9 +16,13 @@
     "@hookform/resolvers": "^2.9.8",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
+    "@nextui-org/react": "^1.0.0-beta.10",
     "@prisma/client": "^4.3.1",
     "@vespaiach/axios-fetch-adapter": "^0.3.0",
     "axios": "^0.27.2",
+    "cookie": "^0.5.0",
+    "jose": "^4.9.3",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "mongoose": "^6.6.1",
     "next": "12.3.0",
@@ -30,6 +34,8 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "@types/cookie": "^0.5.1",
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.18",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
@@ -48,6 +54,6 @@
     "tabWidth": 2
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/seed.ts"
   }
 }
