@@ -30,5 +30,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.setHeader('Set-Cookie', serialized); // set cookie
 
+  console.log({status: res.status, statusCode: res.statusCode, statusMessage: res.statusMessage})
   return res.status(200).json({auth: req.body});
 }

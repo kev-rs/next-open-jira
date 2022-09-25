@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import z from 'zod';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 const schema = z.object({
   email: z.string().email(),
@@ -20,7 +21,8 @@ const Login = () => {
 
   const handleLogin: SubmitHandler<FormValues> = async ( data ) => {
     const res = await axios.post<{ email: string, name: string }>('/api/auth/login', data);
-    console.log(res);
+    console.log({status: res.status, text: res.statusText})
+    // console.log(res);
     if(res.status === 200) return router.push('/');
   }
 
@@ -63,4 +65,11 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;
+
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // console.log({ctx});
+  return {
+    props: {  }
+  }
+}

@@ -11,7 +11,7 @@ export const Container: React.FC<{ status: EntryStatus }> = ({ status }) => {
   const { entries, updateEntry } = useContext(EntriesContext);
   const { isDragging, setIsDragging } = useContext(UIContext);
 
-  const entriesByStatus = entries.filter((entry) => entry.status === status);
+  const entriesByStatus = entries?.filter((entry) => entry.status === status);
   const entriesMemo = useMemo(() => entriesByStatus, [entriesByStatus]);
 
   const allowDrop = (e: DragEvent<HTMLDivElement>) => e.preventDefault();
@@ -32,7 +32,7 @@ export const Container: React.FC<{ status: EntryStatus }> = ({ status }) => {
       className={isDragging ? styles.dragging : ''}
     >
       <List sx={{ opacity: isDragging ? 0.2 : 1, transition: 'all .3s' }}>
-        {entriesMemo.map((props, index) => (<EntryCard key={index} index={index} {...props} />))}
+        {entriesMemo?.map((props, index) => (<EntryCard key={index} index={index} {...props} />))}
       </List>
     </Paper>
   )
