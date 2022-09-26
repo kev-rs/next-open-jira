@@ -5,11 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import z from 'zod';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string()
+  email: z.string().min(1, 'Required').email(),
+  password: z.string().min(1, 'Required')
 })
 
 type FormValues = z.infer<typeof schema>
@@ -17,13 +16,22 @@ type FormValues = z.infer<typeof schema>
 const Login = () => {
 
   const router = useRouter();
-  const { register, handleSubmit } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, formState: { errors }, setError } = useForm<FormValues>({ 
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: '',
+      password: ''
+    },
+    mode: 'all'
+  });
 
   const handleLogin: SubmitHandler<FormValues> = async ( data ) => {
-    const res = await axios.post<{ email: string, name: string }>('/api/auth/login', data);
-    console.log({status: res.status, text: res.statusText})
-    // console.log(res);
-    if(res.status === 200) return router.push('/');
+    try {
+      const res = await axios.post('/api/auth/login', data);
+      if(res.status === 200) return router.push('/');  
+    } catch (err) {
+      setError('email', { message: 'Invalid credentials' })
+    }    
   }
 
   return (
@@ -36,8 +44,8 @@ const Login = () => {
             fullWidth
             placeholder='user@mail.com'
             label='Email'
-            helperText='Enter your email'
-            color='error'
+            helperText={errors.email?.message ? errors.email?.message : 'Enter your email'}
+            error={!!errors.email?.message}
             sx={{ mb: 2 }}
             {...register('email')}
           />
@@ -45,8 +53,8 @@ const Login = () => {
             fullWidth
             placeholder='*********'
             label='Password'
-            helperText='Enter your password'
-            color='error'
+            helperText={errors.password?.message ? errors.password?.message : 'Enter your password'}
+            error={!!errors.password?.message}
             {...register('password')}
           />
           <Box component='div' display={'flex'} justifyContent='space-between' alignItems={'center'} sx={{ mt: 2 }}>
@@ -67,9 +75,3 @@ const Login = () => {
 
 export default Login;
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  // console.log({ctx});
-  return {
-    props: {  }
-  }
-}

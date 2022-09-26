@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
     const tokenAuth = req.cookies.get('tokenAuth')
     if(!tokenAuth) return;
     try {
-      await jwtVerify(tokenAuth, new TextEncoder().encode(process.env.JWT_SECRET_KEY))
+      await jwtVerify(tokenAuth, new TextEncoder().encode(process.env.JWT_SECRET_KEY));
       return NextResponse.redirect(new URL('/', req.url));
     } catch (err) {
       console.log(err);

@@ -4,6 +4,15 @@ const prisma = new PrismaClient();
 
 async function seed() {
   try {
+    await prisma.user.deleteMany();
+    await prisma.user.create({
+      data: {
+        name: 'Admin',
+        email: 'admin@mail.com',
+        password: 'admin'
+      }
+    })
+
     await prisma.entry.deleteMany();
     await prisma.entry.createMany({
       data: [
